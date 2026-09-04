@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shri Shopping</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        /* =========================
+           LOGIN PAGE
+        ========================= */
+
+        #loginPage {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed,
+                    #ec4899
+                );
+        }
+
+        .login-box {
+            width: 380px;
+            max-width: 90%;
+            padding: 40px;
+
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 20px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.25);
+
+            text-align: center;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #ec4899
+            );
+
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .login-box h1 {
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .login-box p {
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px 15px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #6366f1;
+
+            box-shadow:
+                0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(79, 70, 229, 0.35);
+        }
+
+        .demo-password {
+            margin-top: 20px;
+            padding: 10px;
+
+            background: #f1f5f9;
+            border-radius: 8px;
+
+            font-size: 13px;
+            color: #555;
+        }
+
+        #errorMessage {
+            color: #dc2626;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* =========================
+           SHOP PAGE
+        ========================= */
+
+        #shopPage {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 70px;
+
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            box-shadow:
+                0 2px 15px rgba(0, 0, 0, 0.08);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: bold;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #ec4899
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logout-button {
+            padding: 9px 18px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #ef4444;
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .logout-button:hover {
+            background: #dc2626;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 70px 7%;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #fdf2f8
+                );
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #db2777
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+
+            max-width: 650px;
+            margin: auto;
+        }
+
+        /* PRODUCTS */
+
+        .products-section {
+            padding: 60px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 40px;
+        }
+
+        .products {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.08);
+
+            transition: 0.3s;
+
+            border: 1px solid #eee;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.13);
+        }
+
+        .product-image {
+            height: 180px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 70px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #fce7f3
+                );
+        }
+
+        .product-info {
+            padding: 22px;
+        }
+
+        .product-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 21px;
+            font-weight: bold;
+
+            color: #4f46e5;
+
+            margin-bottom: 15px;
+        }
+
+        .buy-button {
+            width: 100%;
+
+            padding: 11px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: #4f46e5;
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .buy-button:hover {
+            background: #3730a3;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 30px;
+
+            text-align: center;
+
+            background: #111827;
+            color: #aaa;
+
+            margin-top: 30px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .hero {
+                padding: 50px 5%;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .products-section {
+                padding: 40px 5%;
+            }
+
+            .login-box {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         LOGIN PAGE
+    ========================== -->
+
+    <section id="loginPage">
+
+        <div class="login-box">
+
+            <div class="logo">
+                S
+            </div>
+
+            <h1>Shri Shopping</h1>
+
+            <p>Welcome! Please login to continue.</p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter username"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter password"
+                        required
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+                    Login
+                </button>
+
+            </form>
+
+            <div
+                id="errorMessage"
+            >
+                ❌ Incorrect username or password
+            </div>
+
+            <div class="demo-password">
+                🧪 Testing password: <strong>1234</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SHOP PAGE
+    ========================== -->
+
+    <section id="shopPage">
+
+        <!-- NAVBAR -->
+
+        <nav class="navbar">
+
+            <div class="brand">
+                🛍️ Shri Shopping
+            </div>
+
+            <button
+                class="logout-button"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </nav>
+
+
+        <!-- HERO -->
+
+        <div class="hero">
+
+            <h1>Welcome to Shri Shopping</h1>
+
+            <p>
+                Quality products at affordable prices.
+                Find everything you need in one place.
+            </p>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <section class="products-section">
+
+            <h2 class="section-title">
+                🛒 Our Products
+            </h2>
+
+
+            <div class="products">
+
+
+                <!-- PRODUCT 1 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+                        👕
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Fashion Clothes</h3>
+
+                        <p>
+                            Stylish and comfortable
+                            clothes for everyday use.
+                        </p>
+
+                        <div class="price">
+                            Up to ₹1,000
+                        </div>
+
+                        <button
+                            class="buy-button"
+                            onclick="buyProduct('Fashion Clothes')"
+                        >
+                            View Product
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 2 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🪒
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Electric Trimmer</h3>
+
+                        <p>
+                            Easy-to-use trimmer
+                            for your daily grooming.
+                        </p>
+
+                        <div class="price">
+                            Up to ₹500
+                        </div>
+
+                        <button
+                            class="buy-button"
+                            onclick="buyProduct('Electric Trimmer')"
+                        >
+                            View Product
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 3 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+                        🎒
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Travel Bag</h3>
+
+                        <p>
+                            Durable and stylish bag
+                            for travel and daily use.
+                        </p>
+
+                        <div class="price">
+                            Up to ₹700
+                        </div>
+
+                        <button
+                            class="buy-button"
+                            onclick="buyProduct('Travel Bag')"
+                        >
+                            View Product
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 4 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+                        📱
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Mobile Cover</h3>
+
+                        <p>
+                            Protective and stylish
+                            covers for your phone.
+                        </p>
+
+                        <div class="price">
+                            Up to ₹100
+                        </div>
+
+                        <button
+                            class="buy-button"
+                            onclick="buyProduct('Mobile Cover')"
+                        >
+                            View Product
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 5 -->
+
+                <div class="product-card">
+
+                    <div class="product-image">
+                        👟
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>Casual Shoes</h3>
+
+                        <p>
+                            Comfortable shoes for
+                            everyday walking and casual use.
+                        </p>
+
+                        <div class="price">
+                            Up to ₹1,500
+                        </div>
+
+                        <button
+                            class="buy-button"
+                            onclick="buyProduct('Casual Shoes')"
+                        >
+                            View Product
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+            © 2026 <strong>Shri Shopping</strong>.
+            All rights reserved.
+        </footer>
+
+    </section>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const loginPage =
+            document.getElementById("loginPage");
+
+        const shopPage =
+            document.getElementById("shopPage");
+
+        const errorMessage =
+            document.getElementById("errorMessage");
+
+
+        /*
+         * DEMO LOGIN
+         *
+         * Username: admin
+         * Password: 1234
+         */
+
+        loginForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                const username =
+                    document.getElementById("username").value;
+
+                const password =
+                    document.getElementById("password").value;
+
+
+                if (
+                    username === "admin" &&
+                    password === "1234"
+                ) {
+
+                    loginPage.style.display = "none";
+
+                    shopPage.style.display = "block";
+
+                } else {
+
+                    errorMessage.style.display = "block";
+
+                }
+
+            }
+        );
+
+
+        /*
+         * LOGOUT
+         */
+
+        function logout() {
+
+            shopPage.style.display = "none";
+
+            loginPage.style.display = "flex";
+
+            document.getElementById("username").value = "";
+
+            document.getElementById("password").value = "";
+
+            errorMessage.style.display = "none";
+        }
+
+
+        /*
+         * PRODUCT BUTTON
+         */
+
+        function buyProduct(productName) {
+
+            alert(
+                "You selected: " +
+                productName +
+                "\n\nShopping functionality can be added next!"
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
